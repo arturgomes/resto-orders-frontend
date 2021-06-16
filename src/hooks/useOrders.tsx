@@ -18,17 +18,20 @@ interface Recipe {
     created_at: Date;
 }
 
-interface Order {
+export interface Order {
     id: string;
     created_at: string;
     ordered: RecipeSimple;
 }
-
+interface Login {
+    user: string;
+    password: string;
+}
 type OrderInput = Omit<Order, 'id' | 'createdAt'>;
 type RecipeInput = Omit<Recipe, 'id' | 'createdAt'>;
 type RecipeSimple = Omit<
     Recipe,
-    'id' | 'ingredients' | 'requiredTime' | 'steps' | 'created_at'
+    'ingredients' | 'requiredTime' | 'steps' | 'created_at'
 >;
 
 interface OrdersProviderProps {
@@ -40,6 +43,9 @@ interface OrdersContextData {
     createOrder: (order: OrderInput) => Promise<void>;
     recipes: Recipe[];
     createRecipe: (order: RecipeInput) => Promise<void>;
+    login: Login;
+    handleSearch: (searchText: string) => void;
+    filter: string;
 }
 
 const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
@@ -47,6 +53,8 @@ const OrdersContext = createContext<OrdersContextData>({} as OrdersContextData);
 export const OrdersProvider = ({ children }: OrdersProviderProps) => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [login, setLogin] = useState<Login>({ user: '', password: '' });
+    const [filter, setFilter] = useState('');
 
     useEffect(() => {
         api.get('recipes').then((response) => {
@@ -55,6 +63,7 @@ export const OrdersProvider = ({ children }: OrdersProviderProps) => {
         api.get('orders').then((response) => {
             setOrders(response.data.orders);
         });
+        setLogin({ user: 'testeusername', password: 'testesenha' });
     }, []);
 
     async function createRecipe(recipeInput: RecipeInput) {
@@ -67,9 +76,20 @@ export const OrdersProvider = ({ children }: OrdersProviderProps) => {
         const { order } = response.data;
         setOrders([...orders, order]);
     }
+    function handleSearch(searchText: string) {
+        setFilter(searchText);
+    }
     return (
         <OrdersContext.Provider
-            value={{ orders, createOrder, recipes, createRecipe }}
+            value={{
+                orders,
+                createOrder,
+                recipes,
+                createRecipe,
+                login,
+                handleSearch,
+                filter,
+            }}
         >
             {children}
         </OrdersContext.Provider>

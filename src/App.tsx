@@ -1,19 +1,11 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-    useParams,
-} from 'react-router-dom';
-import { Dashboard } from './components/Dashboard';
-import { Header } from './components/Header';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { LoginPage } from './components/LoginPage';
 import { Recipe } from './components/Recipe';
 // import { NewOrderModal } from './components/NewOrderModal';
-import { GlobalStyle } from './styles/global';
 import { OrdersProvider } from './hooks/useOrders';
+import Orders from './components/Orders';
 
 Modal.setAppElement('#root');
 export function App() {
@@ -33,12 +25,9 @@ export function App() {
             /> */}
             <Router>
                 <Switch>
+                    <Route path="/" exact component={LoginPage} />
                     <Route path="/recipe/:recipe_id" exact component={Recipe} />
-                    <Route path="/">
-                        <Header onOpenNewOrderModal={handleOpenNewOrderModal} />
-                        <GlobalStyle />
-                        <Dashboard />
-                    </Route>
+                    <Route path="/orders" exact component={Orders} />
                 </Switch>
             </Router>
         </OrdersProvider>

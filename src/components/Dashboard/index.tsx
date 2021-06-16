@@ -1,12 +1,14 @@
 // import { Summary } from '../Summary';
-import { TransactionTable } from '../TransactionsTable';
+import { OrderTable } from '../OrderTable';
 import { Container } from './styles';
 
 export function Dashboard() {
+    //implement function for search bar...
+
     return (
         <Container>
             {/* <Summary /> */}
-            <TransactionTable />
+            <OrderTable />
         </Container>
     );
 }

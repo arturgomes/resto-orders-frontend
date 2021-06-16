@@ -1,15 +1,15 @@
+import SearchBar from '../SearchBar';
 import { Container, Content } from './styles';
-interface HeaderProps {
-    onOpenNewOrderModal: () => void;
-}
-export function Header({ onOpenNewOrderModal }: HeaderProps) {
+import Logo from '../../assets/logo-coco-bambu-mini.png';
+import { MenuRight } from '../MenuRight';
+export function Header() {
     return (
         <Container>
             <Content>
-                {/* <img src={logoImg} alt="dt money" /> */}
-                <button type="button" onClick={onOpenNewOrderModal}>
-                    Nova Transação
-                </button>
+                <img src={Logo} alt="Coco Bambu" />
+
+                <SearchBar />
+                <MenuRight />
             </Content>
         </Container>
     );
