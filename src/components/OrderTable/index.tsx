@@ -35,12 +35,6 @@ export function OrderTable() {
                 return PratoMoqueca;
         }
     }
-    const dateOptions = {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: false,
-    };
     function renderItem(order: Order) {
         return (
             <OrderItem key={order.id}>

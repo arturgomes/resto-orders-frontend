@@ -23,4 +23,17 @@ export const MenuItem = styled.li<{ active?: boolean }>`
         margin: 0 6px;
         color: ${(props) => (props.active ? 'var(--orange-medium)' : '#fff')};
     }
+    button {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 12px;
+        margin: 0 6px;
+        color: ${(props) => (props.active ? 'var(--orange-medium)' : '#fff')};
+
+        padding: 0;
+        border: none;
+        background: none;
+    }
 `;

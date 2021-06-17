@@ -44,6 +44,8 @@ interface OrdersContextData {
     recipes: Recipe[];
     createRecipe: (order: RecipeInput) => Promise<void>;
     login: Login;
+    handleLogin: (username: string, password: string) => boolean;
+    handleLogout: () => void;
     handleSearch: (searchText: string) => void;
     filter: string;
 }
@@ -79,6 +81,18 @@ export const OrdersProvider = ({ children }: OrdersProviderProps) => {
     function handleSearch(searchText: string) {
         setFilter(searchText);
     }
+    function handleLogin(username: string, password: string) {
+        console.log(username, password);
+        if (login.user === username && login.password === password) {
+            localStorage.setItem('@coco-bambu/login', 'true');
+            return true;
+        }
+        return false;
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('@coco-bambu/login');
+    }
     return (
         <OrdersContext.Provider
             value={{
@@ -87,6 +101,8 @@ export const OrdersProvider = ({ children }: OrdersProviderProps) => {
                 recipes,
                 createRecipe,
                 login,
+                handleLogin,
+                handleLogout,
                 handleSearch,
                 filter,
             }}

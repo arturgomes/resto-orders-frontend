@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { Link, useParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -55,10 +57,12 @@ interface ListProps {
     desc: string;
 }
 Modal.setAppElement('#root');
-export function Recipe() {
+export function RecipePage() {
     let { recipe_id } = useParams<RecipeParamsProps>();
     const { recipes } = useOrders();
-    const { timer, handleStart, handlePause } = useTimer();
+    const history = useHistory();
+
+    const { timer, handleStart } = useTimer();
 
     const [recipe, setRecipe] = useState<Recipe>();
     const [listIngredients, setListIngredients] = useState<ListProps[]>([]);
@@ -69,6 +73,11 @@ export function Recipe() {
     const [progressBar, setProgressBar] = useState(0);
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
+    //check login
+    useEffect(() => {
+        const login = localStorage.getItem('@coco-bambu/login');
+        login !== 'true' && history.push('/');
+    }, []);
     //once the recipe is loaded, set ingredient list and step list
     useEffect(() => {
         const [currentRecipe] = recipes.filter(
@@ -89,7 +98,7 @@ export function Recipe() {
                 })
             );
         }
-    }, [recipes]);
+    }, [recipes, recipe_id]);
 
     //will check if all ingredients are ticked
     useEffect(() => {
@@ -116,7 +125,7 @@ export function Recipe() {
         } else {
             setOkSteps(false);
         }
-    }, [listSteps]);
+    }, [listSteps, okIngredients]);
 
     useEffect(() => {
         const formatTime = (timer: number) => {
@@ -180,7 +189,7 @@ export function Recipe() {
                 <GlobalStyle />
                 <Header imgProp={handleThumbnail(recipe.tag)}>
                     <HeaderTop>
-                        <Link to={`/`}>
+                        <Link to={`/orders`}>
                             <img src={IconBack} alt="voltar" />
                         </Link>
                         <PreparingTime>
