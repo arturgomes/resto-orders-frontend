@@ -28,6 +28,7 @@ import {
     Item,
     StepTickContent,
     BottomRecipe,
+    RecipeButton,
 } from './styles';
 
 import PratoArroz from '../../assets/prato-arroz-grande.jpg';
@@ -76,7 +77,7 @@ export function RecipePage() {
     //check login
     useEffect(() => {
         const login = localStorage.getItem('@coco-bambu/login');
-        login !== 'true' && history.push('/');
+        login !== 'true' && history.push('/orders');
     }, []);
     //once the recipe is loaded, set ingredient list and step list
     useEffect(() => {
@@ -165,7 +166,11 @@ export function RecipePage() {
     function handleCloseOrderModal() {
         setIsOrderModalOpen(false);
     }
-
+    //check login
+    function handleFinishOrderModal() {
+        setIsOrderModalOpen(false);
+        history.push('/orders');
+    }
     function handleThumbnail(tag: string) {
         switch (tag) {
             case 'arroz':
@@ -219,11 +224,7 @@ export function RecipePage() {
                         {listIngredients.map((ingredient: ListProps) => (
                             <Item key={ingredient.desc}>
                                 <TickButton
-                                    color={
-                                        ingredient.ready
-                                            ? 'rgba(0,200,0)'
-                                            : '#eee'
-                                    }
+                                    ready={ingredient.ready}
                                     onClick={() =>
                                         handleUpdateIngredient(ingredient.desc)
                                     }
@@ -247,11 +248,7 @@ export function RecipePage() {
                             <Item key={step.desc}>
                                 <StepTickContent>
                                     <TickButton
-                                        color={
-                                            step.ready
-                                                ? 'rgba(0,200,0)'
-                                                : '#eee'
-                                        }
+                                        ready={step.ready}
                                         onClick={() =>
                                             handleUpdateStep(step.desc)
                                         }
@@ -285,15 +282,29 @@ export function RecipePage() {
                             value={progressBar}
                         />
                     </div>
-                    <button onClick={handleOpenOrderModal}>
-                        Iniciar Preparo
-                    </button>
+                    {okSteps ? (
+                        <RecipeButton
+                            active={true}
+                            onClick={handleOpenOrderModal}
+                        >
+                            Finalizar
+                        </RecipeButton>
+                    ) : (
+                        <RecipeButton
+                            active={false}
+                            onClick={handleOpenOrderModal}
+                        >
+                            Iniciar Preparo
+                        </RecipeButton>
+                    )}
                 </BottomRecipe>
                 <OrderModal
                     isOpen={isOrderModalOpen}
                     onRequestClose={handleCloseOrderModal}
                     okIngredients={okIngredients}
+                    okSteps={okSteps}
                     handleStart={handleStart}
+                    handleFinishOrderModal={handleFinishOrderModal}
                 />
             </Container>
         );

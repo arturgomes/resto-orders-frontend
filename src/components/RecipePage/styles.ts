@@ -105,11 +105,11 @@ export const StepContent = styled.div`
 export const StepTickContent = styled.div`
     width: 10%;
 `;
-export const TickButton = styled.button<{ color: string }>`
+export const TickButton = styled.button<{ ready: boolean }>`
     width: 3em;
     height: 3em;
 
-    background-color: ${(props) => props.color};
+    background-color: ${(props) => (props.ready ? 'rgba(0,200,0)' : '#eee')};
     border-radius: 50%;
     vertical-align: middle;
     border: 1px solid #ddd;
@@ -145,13 +145,15 @@ export const BottomRecipe = styled.div`
     span {
         font-weight: bold;
     }
-    button {
-        background-color: var(--orange-medium);
-        padding: 8px 16px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-    }
+`;
+
+export const RecipeButton = styled.button<{ active: boolean }>`
+    background-color: ${(props) =>
+        props.active === true ? 'rgba(0,200,0)' : 'var(--orange-medium)'};
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
 `;
