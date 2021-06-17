@@ -15,14 +15,14 @@ Abra [http://localhost:3000](http://localhost:3000) para visualizar no navegador
 # Requisitos
 
 ## Introdução
-...
+Desafio de cardapio e listagem receita
 
 
 ## Login
 
-O sistema deve possuir um tela de login (arquivo que deve validar se o username e senha estão corretos.
+O sistema deve possuir um tela de login: arquivo que deve validar se o username e senha estão corretos.
 
-A validação pode ser feita diretamente no front-end para um par determinado de username e senha (ex.: testeusername / testesenha).
+A validação é feita diretamente no front-end para um par determinado de username ('testeusername') e senha ('testesenha').
 
 
 ## Lista de Receitas
