@@ -55,7 +55,6 @@ export function OrderModal({
                         Os ingredientes foram selecionados. Agora podemos
                         começar.
                     </p>
-
                     <button type="submit" value="Começar">
                         Começar agora
                     </button>
